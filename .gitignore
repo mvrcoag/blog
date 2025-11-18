@@ -35,3 +35,17 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# IDE
+.idea
+
+# Docker
+.docker
+
+# Logs
+logs
+*.log
+
+# Environment files
+.env*
+!.env.example
