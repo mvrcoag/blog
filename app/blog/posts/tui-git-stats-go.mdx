@@ -1,0 +1,154 @@
+---
+title: 'TUI para Git Stats con Go'
+publishedAt: '2025-11-18'
+summary: 'Terminal User Interface, me gustan. Vivo en la terminal, así que decidí crear mi propia TUI desde 0 usango Go. Te comparto lo que aprendí.'
+---
+
+![TUI Git Stats Go](/img/tui-git-stats-go.png)
+
+Una _Terminal User Interface_ (TUI) es una interfaz de usuario basada en una terminal. Sí, solo eso.
+
+¿Y qué tienen de especial? ¿No tenemos ya GUIs que se adaptan mejor a las necesidades visuales actuales?
+
+Sí, es verdad que las GUIs pueden ser mejores para ciertos casos, pero si como yo eres desarrollador de software, sabrás que la mayor parte del tiempo
+la pasamos en la terminal.
+
+Naturalmente sentimos la terminal como un hogar, un lugar donde podemos hacer lo que queramos y que representa el punto de inicio
+para todos los proyectos que realizamos.
+
+Es por esto que decidí emprender la tarea de crear una TUI y con ello aprender cómo es que funcionan, y tal vez en un futuro llevar a cabo una 
+creación que tenga un mayor grado de complejidad.
+
+## ¿Qué desarrollar?
+
+Esta fue la primera pregunta que debía hacerme. Explorando encontré el repositorio de GitHub [Build Your Own X](https://github.com/codecrafters-io/build-your-own-x), una lista de guías
+que puedes seguir para aprender a construir tu propio "lo que sea". Tienen desde CLIs hasta la construcción de kernels y sistemas operativos (un tema que seguramente exploraré y compartiré en este blog).
+
+Este repositorio representó un punto de inicio para mí. Exploré las opciones y llegué al artículo [Visualize your local Git contributions with Go](https://thevalleyofcode.com/go-git-contributions).
+
+Estaba decidido: Iba a construir una TUI que me mostrara las contribuciones de Git en mi local.
+
+## Aprendizajes clave
+
+Podría escribir todo mi proceso de construcción, pero la realidad es que el artículo original existe y considero que es una mejor referencia para aquel que quiera
+construir esta herramienta por si mismo.
+
+En su lugar, voy a compartir algunos aprendizajes clave que obtuve a lo largo de esta gratificante experiencia.
+
+#### 1. Flag
+
+Go es maravilloso para la construcción de TUIs. Cuenta con un paquete llamado `flag`. `flag` se encarga, 
+entre otras cosas, de parsear los elementos que le sean pasados al comando como flags del mismo.
+
+Pongamos un ejemplo, consideremos el comando `git commit -m "..."`. En este ejemplo el **flag** sería `-m`, y esta flag tiene un valor asociado 
+`"..."`. El paquete `flag` de Go nos abstrae de todo esto y hace que con algunas líneas de código podamos hacer ese parsing de valores:
+
+```go
+package main
+
+import "flag"
+
+func main() {
+	var folder string
+	var email string
+
+	flag.StringVar(&folder, "add", "", "add a new folder to scan for Git repositories")
+	flag.StringVar(&email, "email", "your@email.com", "the email to scan")
+	flag.Parse()
+
+	if folder != "" {
+		scan(folder)
+		return
+	}
+
+	stats(email)
+}
+```
+
+#### 2. Directorios y recursividad
+
+Una de las necesidades de la herramienta que estaba construyendo era que debía ser capaz de dado un _root directory_ buscar de forma recursiva en todos los subdirectorios la existencia de repositorios de Git.
+
+Si bien ya había trabajado con recursividad previamente, nunca lo había hecho enfocado a un sistema de archivos.
+
+Nuevamente, Go facilita mucho la interacción con el sistema de archivos del sistema operativo y el código se vuelve muy fácil de entender.
+
+```go
+func scanGitFolders(folders []string, folder string) []string {
+	folder = strings.TrimSuffix(folder, "/")
+
+	f, err := os.Open(folder)
+	if err != nil {
+		log.Fatal(err)
+	}
+	files, err := f.Readdir(-1)
+	f.Close()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var path string
+
+	for _, file := range files {
+		if file.IsDir() {
+			path = folder + "/" + file.Name()
+			if file.Name() == ".git" {
+				path = strings.TrimSuffix(path, "/.git")
+				fmt.Println(path)
+				folders = append(folders, path)
+				continue
+			}
+			if file.Name() == "vendor" || file.Name() == "node_modules" {
+				continue
+			}
+			folders = scanGitFolders(folders, path)
+		}
+	}
+
+	return folders
+}
+```
+
+Bastante fácil. La clave aquí es que cuando se identifica que se está en un directorio, que no se trata de un directorio de git y que tampoco es un directorio "vendor" o "node_modules", entonces se usa recursividad para 
+iterar ahora a un nivel más profundo, buscando nuevos subdirectorios.
+
+Bastante interesante el cómo Go hace esto tan fácil.
+
+#### 3. os/user
+
+Cuando construimos CLIs o TUIs es bastante común que toda la información se quede en local, sin embargo muchas veces sigue siendo necesario almacenar los datos en algún lugar,
+
+Cuando desarrollamos en web es muy común que este lugar de almacenamiento de datos sea la base de datos. Pero si pensamos en en CLIs o TUIs (e incluso en ocasiones también aplica para web) una base de datos se vuelve
+un overkill. Es mucho para el tipo de información que se guardará.
+
+Un enfoque común es usar un archivo plano local donde se pueda almacenar información y preservar el estado de la herramienta que desarrollemos. Esto es especialmente común para configuraciones, sin embargo puede 
+usarse para cualquier tipo de información siempre que mantengamos una estructura clara.
+
+Un lugar común de dónde almacenar este tipo de archivos de configuración es el _user home_. Este home varia de acuerdo al sistema operativo, además variará la ruta relativa de acuerdo a desde dónde se este ejecutando 
+nuestra herramienta.
+
+Esto agrega cierto nivel de complejidad debido a lo variable de la situación, pero gracias al paquete `os/user` Go lo gestiona de forma muy sencilla.
+
+```go
+func getDotFilePath() string {
+	usr, err := user.Current()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	dotFile := usr.HomeDir + "/.gogitlocalstats"
+
+	return dotFile
+}
+```
+
+Bastante sencillo. Este paquete ya cuenta con una función `Current` que devuelve información clave del usuario que ejecuta la herramienta, información que ya contiene el dato `HomeDir`, mismo que usamos para establecer 
+la ubicación de nuestro archivo de configuración `.gogitlocalstats`.
+
+## Conclusión
+
+Go es excelente no solo para servidores, sino también para sistemas y herramientas que usan directamente el sistema opetativo como suelen hacer los CLIs.
+
+Me interesa desarrollar mi propio componente de sistema operativo, y sin duda hoy Go ha subido considerablemente en el ranking de _qué lenguaje usar_ para dicha tarea.
+
+Nos vemos.
