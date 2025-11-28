@@ -18,19 +18,6 @@ export default function Page() {
           a miles de usuarios.
         </p>
 
-        <div className="mb-8 rounded-lg border border-neutral-200 dark:border-neutral-800 p-6 bg-neutral-50 dark:bg-neutral-900">
-          <h2 className="text-xl font-semibold mb-4 mt-0">Experiencia profesional</h2>
-          <div className="mb-4">
-            <p className="font-medium mb-1">Full Stack Web Developer en Finexitus</p>
-            <p className="text-sm text-neutral-600 dark:text-neutral-400">
-              Desarrollando soluciones web escalables con TypeScript, Go y Python
-            </p>
-          </div>
-          <p className="text-sm text-neutral-600 dark:text-neutral-400">
-            Experiencia profesional desde 2019
-          </p>
-        </div>
-
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-4">Especialización</h2>
           <p className="mb-4">

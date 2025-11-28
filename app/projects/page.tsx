@@ -151,7 +151,7 @@ export default function ProjectsPage() {
           <div className="mb-6">
             <h3 className="text-lg font-semibold mb-3">Data & AI</h3>
             <div className="flex flex-wrap gap-2">
-              {["Pandas", "NumPy", "scikit-learn"].map((tech) => (
+              {["Pandas", "NumPy", "scikit-learn", "BigQuery ML", "OpenAI API", "Anthropic API", "Gemini API"].map((tech) => (
                 <span
                   key={tech}
                   className="px-3 py-1 text-sm rounded-full bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200"
