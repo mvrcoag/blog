@@ -11,17 +11,26 @@ import { baseUrl } from "./sitemap";
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: "Marco A. García",
+    default: "Marco A. García - Full Stack Developer & Systems Architect",
     template: "%s | Marco A. García",
   },
-  description: "Full Stack Developer",
+  description: "Full Stack Developer & Systems Architect especializado en arquitecturas limpias y patrones de diseño. Experiencia en TypeScript, Go, Python. Data Science & AI certified.",
+  keywords: ["Full Stack Developer", "Systems Architect", "TypeScript", "Go", "Python", "Clean Architecture", "Hexagonal Architecture", "CQRS", "Data Science", "AI", "Open Source"],
+  authors: [{ name: "Marco A. García", url: baseUrl }],
+  creator: "Marco A. García",
   openGraph: {
-    title: "Marco A. García",
-    description: "Full Stack Developer",
+    title: "Marco A. García - Full Stack Developer & Systems Architect",
+    description: "Full Stack Developer & Systems Architect especializado en arquitecturas limpias y patrones de diseño. Experiencia en TypeScript, Go, Python.",
     url: baseUrl,
     siteName: "Marco A. García",
     locale: "es_MX",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Marco A. García - Full Stack Developer & Systems Architect",
+    description: "Full Stack Developer & Systems Architect especializado en arquitecturas limpias y patrones de diseño.",
+    creator: "@mvrcoag",
   },
   robots: {
     index: true,
