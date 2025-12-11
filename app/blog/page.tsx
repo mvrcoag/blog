@@ -2,7 +2,7 @@ import { BlogPosts } from "app/components/posts";
 
 export const metadata = {
   title: "Blog",
-  description: "Blog Marco A. García",
+  description: "Marco A. García's Blog",
 };
 
 export default function Page() {

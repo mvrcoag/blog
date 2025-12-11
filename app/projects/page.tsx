@@ -52,24 +52,24 @@ export default function ProjectsPage() {
   return (
     <section>
       <h1 className="mb-2 text-3xl font-bold tracking-tighter">
-        Proyectos
+        Projects
       </h1>
       <p className="mb-8 text-lg text-neutral-700 dark:text-neutral-300">
-        Herramientas y recursos open source para la comunidad de desarrolladores
+        Open source tools and resources for the developer community
       </p>
 
       <div className="prose prose-neutral dark:prose-invert max-w-none">
         <p className="mb-8">
-          Creo firmemente en el poder del código abierto. Estos proyectos reflejan mi
-          pasión por las arquitecturas limpias, los patrones de diseño, y crear herramientas
-          que hagan la vida más fácil a otros desarrolladores.
+          I firmly believe in the power of open source. These projects reflect my
+          passion for clean architectures, design patterns, and creating tools
+          that make life easier for other developers.
         </p>
 
-        <h2 className="text-2xl font-semibold mb-6">Proyectos destacados</h2>
+        <h2 className="text-2xl font-semibold mb-6">Featured Projects</h2>
 
         <ProjectCard
           title="clegen"
-          description="Herramienta CLI para generar módulos con arquitectura limpia en proyectos TypeScript. Acelera el desarrollo siguiendo principios SOLID y patrones de diseño establecidos."
+          description="CLI tool for generating modules with clean architecture in TypeScript projects. Accelerates development by following SOLID principles and established design patterns."
           stars={21}
           forks={4}
           tech={["TypeScript", "CLI", "Clean Architecture", "Code Generation"]}
@@ -78,7 +78,7 @@ export default function ProjectsPage() {
 
         <ProjectCard
           title="nodejs-express-hexagonal-architecture"
-          description="Implementación de referencia de arquitectura hexagonal (Ports & Adapters) con Node.js y Express. Ejemplo práctico de cómo estructurar aplicaciones escalables y mantenibles."
+          description="Reference implementation of hexagonal architecture (Ports & Adapters) with Node.js and Express. Practical example of how to structure scalable and maintainable applications."
           stars={23}
           forks={3}
           tech={["Node.js", "Express", "TypeScript", "Hexagonal Architecture"]}
@@ -87,7 +87,7 @@ export default function ProjectsPage() {
 
         <ProjectCard
           title="react-hexagonal"
-          description="Aplicación de principios de arquitectura hexagonal en el ecosistema React. Demuestra cómo separar la lógica de negocio de los detalles de implementación en aplicaciones frontend."
+          description="Application of hexagonal architecture principles in the React ecosystem. Demonstrates how to separate business logic from implementation details in frontend applications."
           stars={5}
           forks={2}
           tech={["React", "TypeScript", "Hexagonal Architecture", "Clean Code"]}
@@ -96,7 +96,7 @@ export default function ProjectsPage() {
 
         <ProjectCard
           title="nodejs-cqrs"
-          description="Implementación educativa de Command Query Responsibility Segregation (CQRS) con Node.js, TypeScript, MongoDB y SQLite. Ideal para aprender este patrón arquitectónico."
+          description="Educational implementation of Command Query Responsibility Segregation (CQRS) with Node.js, TypeScript, MongoDB, and SQLite. Ideal for learning this architectural pattern."
           stars={4}
           forks={0}
           tech={["Node.js", "TypeScript", "CQRS", "MongoDB", "SQLite"]}
@@ -104,10 +104,10 @@ export default function ProjectsPage() {
         />
 
         <div className="mt-12 pt-8 border-t border-neutral-200 dark:border-neutral-800">
-          <h2 className="text-2xl font-semibold mb-4">Stack técnico</h2>
+          <h2 className="text-2xl font-semibold mb-4">Tech Stack</h2>
 
           <div className="mb-6">
-            <h3 className="text-lg font-semibold mb-3">Lenguajes</h3>
+            <h3 className="text-lg font-semibold mb-3">Languages</h3>
             <div className="flex flex-wrap gap-2">
               {["TypeScript", "JavaScript", "Go", "Python", "PHP", "Lua", "Bash"].map((lang) => (
                 <span
@@ -163,7 +163,7 @@ export default function ProjectsPage() {
           </div>
 
           <div className="mb-6">
-            <h3 className="text-lg font-semibold mb-3">Infraestructura & DevOps</h3>
+            <h3 className="text-lg font-semibold mb-3">Infrastructure & DevOps</h3>
             <div className="flex flex-wrap gap-2">
               {["Docker", "AWS", "Nginx", "PostgreSQL", "MongoDB", "SQLite"].map((tech) => (
                 <span
@@ -193,10 +193,10 @@ export default function ProjectsPage() {
 
         <div className="mt-8 p-6 rounded-lg bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800">
           <p className="mb-4">
-            <strong>¿Interesado en colaborar?</strong>
+            <strong>Interested in collaborating?</strong>
           </p>
           <p className="mb-0">
-            Todos estos proyectos están disponibles en{" "}
+            All these projects are available on{" "}
             <a
               href="https://github.com/marcoagia"
               target="_blank"
@@ -205,7 +205,7 @@ export default function ProjectsPage() {
             >
               GitHub
             </a>
-            . Las contribuciones, issues y sugerencias son siempre bienvenidas.
+            . Contributions, issues, and suggestions are always welcome.
           </p>
         </div>
       </div>

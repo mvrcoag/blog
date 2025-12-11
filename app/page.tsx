@@ -12,24 +12,24 @@ export default function Page() {
 
       <div className="prose prose-neutral dark:prose-invert">
         <p className="mb-6 text-base">
-          Defino mi trabajo como <i>convertir ideas en realidades</i>. Para mí, el
-          código es más que una habilidad: es una forma de arte que permite transformar
-          conceptos abstractos en soluciones tangibles con el potencial de impactar
-          a miles de usuarios.
+          I define my work as <i>turning ideas into reality</i>. For me,
+          code is more than a skill: it's a form of art that allows transforming
+          abstract concepts into tangible solutions with the potential to impact
+          thousands of users.
         </p>
 
         <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-4">Especialización</h2>
+          <h2 className="text-xl font-semibold mb-4">Specialization</h2>
           <p className="mb-4">
-            Me especializo en <strong>arquitecturas limpias</strong> y <strong>patrones de diseño</strong>,
-            con un enfoque particular en arquitectura hexagonal y CQRS. Mis proyectos open source
-            han acumulado más de 50 estrellas en GitHub, ayudando a desarrolladores a implementar
-            mejores prácticas de software.
+            I specialize in <strong>clean architectures</strong> and <strong>design patterns</strong>,
+            with a particular focus on hexagonal architecture and CQRS. My open source projects
+            have accumulated over 50 stars on GitHub, helping developers implement
+            better software practices.
           </p>
         </div>
 
         <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-4">Educación y certificaciones</h2>
+          <h2 className="text-xl font-semibold mb-4">Education and Certifications</h2>
           <p className="mb-2">
             <a
               href="https://www.credential.net/51d8aa51-9e6d-4908-a7c2-632db0fc9b61#acc.ntuRKzVm"
@@ -37,7 +37,7 @@ export default function Page() {
               rel="noopener noreferrer"
               className="underline text-neutral-900 dark:text-neutral-100 hover:text-neutral-600 dark:hover:text-neutral-400"
             >
-              Certificación en Data Science & AI
+              Data Science & AI Certification
             </a>
             {" "}— Tecnológico de Monterrey (2025)
           </p>
@@ -47,20 +47,20 @@ export default function Page() {
         </div>
 
         <div className="mb-8">
-          <h2 className="text-xl font-semibold mb-4">Filosofía y valores</h2>
+          <h2 className="text-xl font-semibold mb-4">Philosophy and Values</h2>
           <p className="mb-4">
-            Creo firmemente en el poder del <strong>código abierto</strong> y la colaboración.
-            Disfruto crear utilidades que hacen la vida más fácil a otros desarrolladores,
-            aportando a la comunidad que tanto me ha dado.
+            I firmly believe in the power of <strong>open source</strong> and collaboration.
+            I enjoy creating utilities that make life easier for other developers,
+            giving back to the community that has given me so much.
           </p>
           <p className="mb-4">
-            Fuera del código, encuentro balance en el gimnasio cada mañana y en la lectura
-            de filosofía y política, siempre buscando aprender algo nuevo cada día.
+            Outside of code, I find balance in the gym every morning and in reading
+            philosophy and politics, always seeking to learn something new every day.
           </p>
         </div>
 
         <div className="mb-8 pt-6 border-t border-neutral-200 dark:border-neutral-800">
-          <h2 className="text-xl font-semibold mb-4">Últimos artículos</h2>
+          <h2 className="text-xl font-semibold mb-4">Latest Articles</h2>
           <BlogPosts />
         </div>
       </div>

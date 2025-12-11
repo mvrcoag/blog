@@ -67,16 +67,16 @@ export function formatDate(date: string, includeRelative = false) {
   let formattedDate = "";
 
   if (yearsAgo > 0) {
-    formattedDate = `Hace ${yearsAgo} años`;
+    formattedDate = `${yearsAgo} year${yearsAgo > 1 ? 's' : ''} ago`;
   } else if (monthsAgo > 0) {
-    formattedDate = `Hace ${monthsAgo} meses`;
+    formattedDate = `${monthsAgo} month${monthsAgo > 1 ? 's' : ''} ago`;
   } else if (daysAgo > 0) {
-    formattedDate = `Hace ${daysAgo} días`;
+    formattedDate = `${daysAgo} day${daysAgo > 1 ? 's' : ''} ago`;
   } else {
-    formattedDate = "Hoy";
+    formattedDate = "Today";
   }
 
-  let fullDate = targetDate.toLocaleString("es-MX", {
+  let fullDate = targetDate.toLocaleString("en-US", {
     month: "short",
     day: "numeric",
     year: "numeric",

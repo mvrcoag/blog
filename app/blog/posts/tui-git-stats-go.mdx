@@ -1,47 +1,47 @@
 ---
-title: 'TUI para Git Stats con Go'
+title: 'TUI for Git Stats with Go'
 publishedAt: '2025-11-18'
-summary: 'Terminal User Interface, me gustan. Vivo en la terminal, así que decidí crear mi propia TUI desde 0 usango Go. Te comparto lo que aprendí.'
+summary: 'I like Terminal User Interfaces. I live in the terminal, so I decided to create my own TUI from scratch using Go. Here's what I learned.'
 ---
 
 ![TUI Git Stats Go](/img/tui-git-stats-go.png)
 
-Una _Terminal User Interface_ (TUI) es una interfaz de usuario basada en una terminal. Sí, solo eso.
+A _Terminal User Interface_ (TUI) is a user interface based on a terminal. Yes, that's it.
 
-¿Y qué tienen de especial? ¿No tenemos ya GUIs que se adaptan mejor a las necesidades visuales actuales?
+And what's so special about them? Don't we already have GUIs that better suit current visual needs?
 
-Sí, es verdad que las GUIs pueden ser mejores para ciertos casos, pero si como yo eres desarrollador de software, sabrás que la mayor parte del tiempo
-la pasamos en la terminal.
+Yes, it's true that GUIs can be better for certain cases, but if you're a software developer like me, you know that most of the time
+we spend it in the terminal.
 
-Naturalmente sentimos la terminal como un hogar, un lugar donde podemos hacer lo que queramos y que representa el punto de inicio
-para todos los proyectos que realizamos.
+Naturally we feel the terminal as a home, a place where we can do whatever we want and that represents the starting point
+for all the projects we undertake.
 
-Es por esto que decidí emprender la tarea de crear una TUI y con ello aprender cómo es que funcionan, y tal vez en un futuro llevar a cabo una 
-creación que tenga un mayor grado de complejidad.
+That's why I decided to embark on the task of creating a TUI and thereby learn how they work, and maybe in the future carry out a
+creation with a higher degree of complexity.
 
-## ¿Qué desarrollar?
+## What to build?
 
-Esta fue la primera pregunta que debía hacerme. Explorando encontré el repositorio de GitHub [Build Your Own X](https://github.com/codecrafters-io/build-your-own-x), una lista de guías
-que puedes seguir para aprender a construir tu propio "lo que sea". Tienen desde CLIs hasta la construcción de kernels y sistemas operativos (un tema que seguramente exploraré y compartiré en este blog).
+This was the first question I had to ask myself. While exploring, I found the GitHub repository [Build Your Own X](https://github.com/codecrafters-io/build-your-own-x), a list of guides
+you can follow to learn to build your own "whatever". They have everything from CLIs to building kernels and operating systems (a topic I'll surely explore and share on this blog).
 
-Este repositorio representó un punto de inicio para mí. Exploré las opciones y llegué al artículo [Visualize your local Git contributions with Go](https://thevalleyofcode.com/go-git-contributions).
+This repository represented a starting point for me. I explored the options and came across the article [Visualize your local Git contributions with Go](https://thevalleyofcode.com/go-git-contributions).
 
-Estaba decidido: Iba a construir una TUI que me mostrara las contribuciones de Git en mi local.
+I was decided: I was going to build a TUI that would show me my local Git contributions.
 
-## Aprendizajes clave
+## Key learnings
 
-Podría escribir todo mi proceso de construcción, pero la realidad es que el artículo original existe y considero que es una mejor referencia para aquel que quiera
-construir esta herramienta por si mismo.
+I could write my entire building process, but the reality is that the original article exists and I consider it a better reference for anyone who wants to
+build this tool themselves.
 
-En su lugar, voy a compartir algunos aprendizajes clave que obtuve a lo largo de esta gratificante experiencia.
+Instead, I'm going to share some key learnings I gained throughout this gratifying experience.
 
 #### 1. Flag
 
-Go es maravilloso para la construcción de TUIs. Cuenta con un paquete llamado `flag`. `flag` se encarga, 
-entre otras cosas, de parsear los elementos que le sean pasados al comando como flags del mismo.
+Go is wonderful for building TUIs. It has a package called `flag`. `flag` handles,
+among other things, parsing the elements passed to the command as flags.
 
-Pongamos un ejemplo, consideremos el comando `git commit -m "..."`. En este ejemplo el **flag** sería `-m`, y esta flag tiene un valor asociado 
-`"..."`. El paquete `flag` de Go nos abstrae de todo esto y hace que con algunas líneas de código podamos hacer ese parsing de valores:
+Let's take an example, consider the command `git commit -m "..."`. In this example the **flag** would be `-m`, and this flag has an associated value
+`"..."`. Go's `flag` package abstracts all this from us and with a few lines of code we can parse values:
 
 ```go
 package main
@@ -65,13 +65,13 @@ func main() {
 }
 ```
 
-#### 2. Directorios y recursividad
+#### 2. Directories and recursion
 
-Una de las necesidades de la herramienta que estaba construyendo era que debía ser capaz de dado un _root directory_ buscar de forma recursiva en todos los subdirectorios la existencia de repositorios de Git.
+One of the needs of the tool I was building was that it should be able to, given a _root directory_, recursively search all subdirectories for the existence of Git repositories.
 
-Si bien ya había trabajado con recursividad previamente, nunca lo había hecho enfocado a un sistema de archivos.
+Although I had worked with recursion before, I had never done it focused on a file system.
 
-Nuevamente, Go facilita mucho la interacción con el sistema de archivos del sistema operativo y el código se vuelve muy fácil de entender.
+Again, Go makes interacting with the operating system's file system very easy and the code becomes very easy to understand.
 
 ```go
 func scanGitFolders(folders []string, folder string) []string {
@@ -109,25 +109,24 @@ func scanGitFolders(folders []string, folder string) []string {
 }
 ```
 
-Bastante fácil. La clave aquí es que cuando se identifica que se está en un directorio, que no se trata de un directorio de git y que tampoco es un directorio "vendor" o "node_modules", entonces se usa recursividad para 
-iterar ahora a un nivel más profundo, buscando nuevos subdirectorios.
+Pretty simple. The key here is that when it's identified that we're in a directory, that it's not a git directory and that it's also not a "vendor" or "node_modules" directory, then recursion is used to
+iterate now at a deeper level, looking for new subdirectories.
 
-Bastante interesante el cómo Go hace esto tan fácil.
+Quite interesting how Go makes this so easy.
 
 #### 3. os/user
 
-Cuando construimos CLIs o TUIs es bastante común que toda la información se quede en local, sin embargo muchas veces sigue siendo necesario almacenar los datos en algún lugar,
+When we build CLIs or TUIs it's quite common for all the information to stay local, however many times it's still necessary to store the data somewhere.
 
-Cuando desarrollamos en web es muy común que este lugar de almacenamiento de datos sea la base de datos. Pero si pensamos en en CLIs o TUIs (e incluso en ocasiones también aplica para web) una base de datos se vuelve
-un overkill. Es mucho para el tipo de información que se guardará.
+When we develop for web it's very common for this data storage place to be the database. But if we think about CLIs or TUIs (and even sometimes it also applies to web) a database becomes
+overkill. It's too much for the type of information that will be saved.
 
-Un enfoque común es usar un archivo plano local donde se pueda almacenar información y preservar el estado de la herramienta que desarrollemos. Esto es especialmente común para configuraciones, sin embargo puede 
-usarse para cualquier tipo de información siempre que mantengamos una estructura clara.
+A common approach is to use a local flat file where information can be stored and the state of the tool we develop can be preserved. This is especially common for configurations, however it can
+be used for any type of information as long as we maintain a clear structure.
 
-Un lugar común de dónde almacenar este tipo de archivos de configuración es el _user home_. Este home varia de acuerdo al sistema operativo, además variará la ruta relativa de acuerdo a desde dónde se este ejecutando 
-nuestra herramienta.
+A common place to store this type of configuration files is the _user home_. This home varies according to the operating system, and the relative path will also vary depending on where our tool is being executed from.
 
-Esto agrega cierto nivel de complejidad debido a lo variable de la situación, pero gracias al paquete `os/user` Go lo gestiona de forma muy sencilla.
+This adds a certain level of complexity due to the variable nature of the situation, but thanks to the `os/user` package Go handles it very simply.
 
 ```go
 func getDotFilePath() string {
@@ -142,13 +141,13 @@ func getDotFilePath() string {
 }
 ```
 
-Bastante sencillo. Este paquete ya cuenta con una función `Current` que devuelve información clave del usuario que ejecuta la herramienta, información que ya contiene el dato `HomeDir`, mismo que usamos para establecer 
-la ubicación de nuestro archivo de configuración `.gogitlocalstats`.
+Quite simple. This package already has a `Current` function that returns key information about the user executing the tool, information that already contains the `HomeDir` data, which we use to establish
+the location of our `.gogitlocalstats` configuration file.
 
-## Conclusión
+## Conclusion
 
-Go es excelente no solo para servidores, sino también para sistemas y herramientas que usan directamente el sistema opetativo como suelen hacer los CLIs.
+Go is excellent not only for servers, but also for systems and tools that directly use the operating system as CLIs usually do.
 
-Me interesa desarrollar mi propio componente de sistema operativo, y sin duda hoy Go ha subido considerablemente en el ranking de _qué lenguaje usar_ para dicha tarea.
+I'm interested in developing my own operating system component, and without a doubt today Go has risen considerably in the ranking of _what language to use_ for such task.
 
-Nos vemos.
+See you.
